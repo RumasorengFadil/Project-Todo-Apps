@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Bookshelf Apps</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="./app/style/style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+
+    <body>
+        <header>
+            <h1 class="judul">Bookshelf Apps</h1>
+        </header>
+        <main>
+            <div class="form-cn">
+                <form action="form" id="form">
+                    <div class="form__elemen">
+                        <label class="form__label" for="judul">Judul</label><br>
+                        <input class="form__input type="text" name="inputJudul" id="inputJudul" required>
+                    </div>
+                    <div class="form__elemen">
+                        <label class="form__label" for="judul">Penulis</label><br>
+                        <input class="form__input type="text" name="inputPenulis" id="inputPenulis" required>
+                    </div>
+                    <div class="form__elemen">
+                        <label class="form__label" for="judul">Tahun</label><br>
+                        <input class="form__input" type="number" name="inputTahun" id="inputTahun" required>
+                    </div>
+                    <div class="form__elemen">
+                        <div class="form__cn-input-check-box">
+                            <input class ="form__input-check-box" type="checkbox" name="inputStatus" id="inputStatus">
+                            <label class="form__text">Selesai dibaca</label>
+                        </div>
+                    </div>
+                    <div class="form__elemen">
+                        <input class="form__submit" type="submit" name="inputJudul" id="inputJudul" value="Masukan ke rak">
+                    </div>
+                </form>
+            </div>
+            <div class="search-cn">
+                <h1 class="judul">Search</h1>
+                <div class="search__input-cn">
+                    <input class="search-cn__search-input" type="search" name="input-search" id="inputSearch">
+                    <img class="search-cn__icn-search" src="./app/assets/Icon/search.svg" alt="">
+                </div>
+            </div>
+            <div class="todo">
+                <div class="todo__cn">
+                    <div class="todo-belum">
+                        <h1 class="judul todo__judul">Belum selesai dibaca</h1>
+                    </div>  
+                </div>
+
+                <div class="todo__cn">
+                    <div class="todo-selesai">
+                        <h1 class="judul todo__judul">Selesai dibaca</h1>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <script src="./app/script.js"></script>
+    </body>
+</html>
+

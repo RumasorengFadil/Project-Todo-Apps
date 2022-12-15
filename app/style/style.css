@@ -1,0 +1,205 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Poppins&display=swap');
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body{
+    background-color: #D9EEFF;
+    width: 93%;
+    margin: 0 auto;
+    font-family: Poppins;
+}
+header{
+    width: 100%;
+    height: 95px;
+    background-color: #D9EEFF;
+    display: flex;
+    align-items: center;
+}
+.judul{
+    font-size: 24px;
+    font-weight: 500;
+}
+
+/* ? Main */
+.form__elemen{
+    margin-bottom: 14px;
+}
+.form-cn{
+    margin-bottom: 48px;
+}
+.form__input{
+    width: 100%;
+    height: 38px;
+    border: 1px solid black;
+    margin-top: 5px;
+    border-radius: 5px;
+    padding-left: 10px;
+}
+.form__label{
+    font-size: 14px;
+}
+.form__input-check-box{
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+}
+.form__cn-input-check-box{
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.form__submit{
+    width: 89px;
+    height: 27px;
+    background-color: #5FD068;
+    border-radius: 3px;
+    border: unset;
+    font-size: 10.8px;
+    color: white;
+    cursor: pointer;
+}
+
+/* Search */
+.search-cn{
+    margin-bottom: 24px;
+    width: 222px;
+}
+.search-cn__search-input{
+    width: 100%;
+    height: 23px;
+}
+.search__input-cn{
+    display: flex;
+    align-items: center;
+    margin-bottom: 17px;
+}
+.search-cn__icn-search{
+    background-color: #EEEEEE;
+    padding: 8px;
+    margin-left: 14px;
+    cursor: pointer;
+}
+/*? Todo */
+.todo{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+/*? Todo belum selesai */
+.todo-belum{
+    margin-bottom: 24px;
+}
+
+/*? Todo Selesai */
+.card__btn-undo{
+    /* background-color: #5FD068; */
+    margin-right: 20px;
+    cursor: pointer;
+}
+.card__btn-delete{
+    border: unset;
+    cursor: pointer;
+    margin-bottom: 1px;
+}
+
+/*? Card */
+.card{
+    margin-bottom: 10px;
+    width: 100%;
+    background-color: #FFFFFF;
+    height: 98px;
+    border-radius: 5px;
+}
+.card__content{
+    margin-left: 17px;
+    position: relative;
+}
+.card__icn-edit{
+    right: 0;
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    background-color: #EEEEEE;
+    border-top-right-radius: 5px;
+    cursor : pointer;
+}
+.card__judul{
+    padding-top: 12px;
+    font-size: 14px;
+}
+.card__penulis{
+    margin: 2px 0 8px 0;
+    font-size: 10px;
+}
+.card__btn-selesai{
+    border: unset;
+    cursor: pointer;
+    margin-right: 20px;
+}
+.card__tahun{
+    position: absolute;
+    right: 17px;
+    top: 25px;
+    font-size: 14px;
+}
+.edit-todo{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 95%;
+    background-color: #D9EEFF;
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.25);
+    padding: 40px 20px 40px 20px;
+    z-index: 10;
+}
+.overlay{
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.25);
+    z-index: 1;
+}
+.hidden{
+    display: none;
+}
+.edit-todo__icn-close{
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    cursor: pointer;
+}
+@media only screen and (min-width : 600px){
+    .todo{
+        flex-direction: row;
+    }
+    .todo__cn{
+        flex-basis: 50%;
+        margin-right: 13px;
+        box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.25);
+        height: 35vw;
+        overflow: scroll;
+    }
+    .todo-belum{
+        width: 80%; 
+        margin: 0 auto;
+       
+    }
+    .todo-selesai{
+        width: 80%;
+        margin: 0 auto;
+    }
+    .todo__judul{
+        margin: 14px 0 21px 0;
+    }
+    .form__input,.search-cn{
+        width: 322px;
+    }
+    .edit-todo{
+        width: 369.8px;
+    }
+}
