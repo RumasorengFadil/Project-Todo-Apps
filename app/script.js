@@ -1,6 +1,16 @@
 "use strict"
 const key = "users";
 let todos = [];
+const overlay = document.querySelector(".overlay");
+const editPopup = document.querySelector(".form-cn-edit");
+const editCloseBtn = document.querySelector(".form-cn-edit__icn-close");
+const formEdit = document.querySelector(".form-edit");
+const popupALert = document.querySelector(".popup-alert");
+const popupConfirm = document.querySelector(".popup-confirm");
+const todo = document.querySelector("main");
+const btnCancel = document.querySelector(".popup__btn-cancel");
+const btnDelete = document.querySelector(".popup__btn-delete");
+const btnOke = document.querySelector(".popup__btn-oke");
 const makeObject = function(inputJudul,inputPenulis,inputTahun,apakahSelesai,id){
     return {
         judul : inputJudul,
@@ -10,7 +20,6 @@ const makeObject = function(inputJudul,inputPenulis,inputTahun,apakahSelesai,id)
         ["id"] : id
     }
 }
-
 const getId = function(){
     const todoObject = JSON.parse(localStorage.getItem(key));
     return todoObject[todoObject.length - 1].id + 1;
@@ -36,85 +45,9 @@ const posisi = function(cards,card){
     }
     return card.id;
 }
-const makeFormElement = function(typeInput,namaLabel = null){
-    const br = document.createElement("br");
-    const label = document.createElement("label");
-    label.classList.add(".form__label");
-    label.textContent = namaLabel;
-
-    const input = document.createElement("input");
-    input.classList.add(`form__${typeInput == "submit" ? typeInput : "input"}`);
-    input.setAttribute("required", true);
-    input.setAttribute("type",typeInput);
-
-    const formElement = document.createElement("div");
-    formElement.classList.add("form__elemen");
-    if(label !== null){
-        formElement.append(label,br,input);
-    }else{
-        formElement.append(br,input);
-    }
-    return formElement;
-}
-const makePageEdit = function(todoObject,judul,penulis,tahun){
-    const formElementJudul = makeFormElement("text","Judul");
-    const formElementPenulis = makeFormElement("text","Penulis");
-    const formElementTahun = makeFormElement("number","Tahun");
-    const formElementSubmit = makeFormElement("submit");
-
-    const inputJudul = formElementJudul.lastChild;
-    const inputPenulis = formElementPenulis.lastChild;
-    const inputTahun = formElementTahun.lastChild;
-
-    const form = document.createElement("form");
-    form.append(formElementJudul,formElementPenulis,formElementTahun,formElementSubmit);
-
-    const buttonClose = document.createElement("img");
-    buttonClose.classList.add("edit-todo__icn-close");
-    buttonClose.setAttribute("src","app/assets/Icon/x.svg");
-
-    const pageEdit = document.createElement("div");
-    pageEdit.classList.add("edit-todo","hidden");
-    pageEdit.append(buttonClose,form);
-
-    buttonClose.addEventListener("click",function(e){
-        switchPageEdit(todoObject);
-    })
-    document.addEventListener("scroll",function(){
-        if(pageEdit){
-            if(!pageEdit.classList.contains("hidden")){
-                switchPageEdit(todoObject);
-            }
-        }
-    })
-    form.addEventListener("submit",function(e){
-        editTodo({
-            ["judul"] : judul,
-            ["penulis"] : penulis,
-            ["tahun"] : tahun,
-            ["inputJudul"] : inputJudul,
-            ["inputPenulis"] : inputPenulis,
-            ["inputTahun"] : inputTahun
-        },todoObject);
-        switchPageEdit(todoObject);
-        event.preventDefault();
-    })
-    return pageEdit;
-
-}
-const makeOverlay = function(todoObject){
-    const overlay = document.createElement("div");
-    overlay.classList.add("overlay","hidden");
-
-    overlay.addEventListener("click",function(e){
-        switchPageEdit(todoObject);
-    })
-    return overlay;
-}
 const makeTodo = function(todoObject){
     const todoBelum = document.querySelector(".todo-belum");
     const todoSelesai = document.querySelector(".todo-selesai");
-
     const card = document.createElement("div");
     card.classList.add("card");
     card.id = todoObject.id;
@@ -142,25 +75,23 @@ const makeTodo = function(todoObject){
     buttonSelesai.classList.add("card__btn-selesai");
     buttonSelesai.setAttribute("src","app/assets/Icon/check.svg");
 
-    const buttonDelete = document.createElement("img");
-    buttonDelete.classList.add("card__btn-delete");
-    buttonDelete.setAttribute("src","app/assets/Icon/trash.svg");
-
-    const pageEdit = makePageEdit(todoObject,judul,penulis,tahun);
-    const overlay = makeOverlay(todoObject);
+    const icnDelete = document.createElement("img");
+    icnDelete.classList.add("card__btn-delete");
+    icnDelete.setAttribute("src","app/assets/Icon/trash.svg");
 
     content.append(iconEdit,tahun,judul,penulis);
-    card.append(content,pageEdit,overlay);
+    card.append(content);
     if(todoObject.apakahSelesai !== true){
         const cards = document.querySelectorAll(".todo-belum .card");
-        content.append(buttonSelesai,buttonDelete);
+        content.append(buttonSelesai,icnDelete);
         todoBelum.insertBefore(card, cards[posisi(cards,card)]);
   
         buttonSelesai.addEventListener("click",function(e){
             addToCompltedList(todoObject,e);
         })
-        buttonDelete.addEventListener("click", function(e){
-            deleteTodo(todoObject,e);
+        icnDelete.addEventListener("click", function(){
+            show([overlay, popupConfirm]);
+            content.append(popupConfirm);
         })
     }else{
         const cards = document.querySelectorAll(".todo-selesai .card");
@@ -168,21 +99,21 @@ const makeTodo = function(todoObject){
         buttonUndo.classList.add("card__btn-undo");
         buttonUndo.setAttribute("src","app/assets/Icon/undo.svg")
 
-        content.append(buttonUndo,buttonDelete);
+        content.append(buttonUndo,icnDelete);
         todoSelesai.insertBefore(card, cards[0]);
         buttonUndo.addEventListener("click", function(e){
             addToUncompletedList(todoObject,e);
         })
-        buttonDelete.addEventListener("click", function(e){
-            deleteTodo(todoObject,e);
+        icnDelete.addEventListener("click", function(){
+            show([overlay, popupConfirm]);
+            content.append(popupConfirm);
         })
     }
-    iconEdit.addEventListener("click",function(e){
-        switchPageEdit(todoObject);
-    })
-
+    iconEdit.addEventListener("click", function(){
+        show([overlay,editPopup]);
+        content.append(editPopup);
+    });
 }
-
 const addToCompltedList = function(todoObject,e){
     e.target.parentElement.parentElement.remove();
     todoObject.apakahSelesai = true;
@@ -204,45 +135,18 @@ const updateData = function(id){
         cards[i].id -= 1;
     }
 }
+const show = function(el){ 
+    if(typeof el === "object") [el].flat().forEach(e => e.classList.remove("hidden"));
+}
+const hidden = function(el){
+    if(typeof el === "object") [el].flat().forEach(e => e.classList.add("hidden"));
+}
 const deleteTodo = function(todoObject,e){
-    e.target.parentElement.parentElement.remove();
+    e.target.closest(".card").remove();
     todos.splice(todoObject.id, 1);
     updateData(todoObject.id);
     if(todos.length !== 0) localStorage.setItem(key,JSON.stringify(todos));
     else localStorage.clear();
-}
-const switchPageEdit = function(todoObject){
-    const pageEdit = document.querySelectorAll(".edit-todo");
-    const overlay = document.querySelectorAll(".overlay");
-    for(let i = 0; i < pageEdit.length; i++){
-        if(Number(pageEdit[i].parentElement.id) === todoObject.id){
-             pageEdit[i].classList.toggle("hidden");
-        }
-    }
-    for(let i = 0; i < overlay.length; i++){
-        if(Number(overlay[i].parentElement.id) === todoObject.id){
-            overlay[i].classList.toggle("hidden");
-       }
-    }
-}
-const editTodo = function(editObject,todoObject){
-    const inputJudul = editObject.inputJudul.value;
-    const inputPenulis = editObject.inputPenulis.value;
-    const inputTahun = editObject.inputTahun.value;
-    const id = todoObject.id;
-    todos[id].judul = inputJudul;
-    todos[id].penulis = inputPenulis;
-    todos[id].tahun = inputTahun;
-    localStorage.setItem(key,JSON.stringify(todos));
-
-    editObject.judul.textContent = inputJudul;
-    editObject.penulis.textContent = inputPenulis;
-    editObject.tahun.textContent = inputTahun;
-
-    todoObject.judul = inputJudul;
-    todoObject.penulis = inputPenulis;
-    todoObject.tahun = inputTahun;
-
 }
 const deleteCard = function(){
     const cards = document.querySelectorAll(".card");
@@ -285,6 +189,29 @@ document.addEventListener("DOMContentLoaded", function(){
     })
     searchTodo();
 })
+formEdit.addEventListener("submit", function(e){
+    const card = e.target.closest(".card");
+    const cardId = Number(card.id);
+    const editPopup = e.target.closest(".form-cn-edit");
+    const inputJudul = editPopup.querySelector(".form__input[name=inputJudul]").value;
+    const inputPenulis = editPopup.querySelector(".form__input[name=inputPenulis]").value;
+    const inputTahun = editPopup.querySelector(".form__input[name=inputTahun]").value;
+    const judul = card.querySelector(".card__judul");
+    const penulis = card.querySelector(".card__penulis");
+    const tahun = card.querySelector(".card__tahun");
+        
+    judul.textContent = inputJudul;
+    penulis.textContent = inputPenulis;
+    tahun.textContent = inputTahun;
+    
+    todos[cardId].judul = inputJudul;
+    todos[cardId].penulis = inputPenulis;
+    todos[cardId].tahun = inputTahun;
+    localStorage.setItem(key,JSON.stringify(todos));
+
+    hidden([editPopup, overlay]);
+    event.preventDefault();
+})
 window.addEventListener("load", function(){
     if(this.localStorage.getItem(key) !== null){
         todos = JSON.parse(this.localStorage.getItem(key));
@@ -292,4 +219,20 @@ window.addEventListener("load", function(){
             makeTodo(todo);
         }
     }
+})
+
+btnDelete.addEventListener("click", function(e){
+    const card = e.target.closest(".card");
+    const todoObject = todos[card.id];
+    hidden([popupConfirm, overlay]);
+    deleteTodo(todoObject,e);
+    show([popupALert,overlay]);
+})
+btnCancel.addEventListener("click", hidden.bind(hidden,[popupConfirm, overlay]));
+btnOke.addEventListener("click", hidden.bind(hidden,[popupALert,overlay]));
+editCloseBtn.addEventListener("click", hidden.bind(hidden,[overlay,editPopup,popupConfirm]));
+overlay.addEventListener("click", hidden.bind(hidden,[overlay,editPopup,popupConfirm]));
+
+document.addEventListener("scroll",function(){
+    hidden([editPopup,overlay,popupALert,popupConfirm]);
 })

@@ -41,7 +41,7 @@
                 <h1 class="judul">Search</h1>
                 <div class="search__input-cn">
                     <input class="search-cn__search-input" type="search" name="input-search" id="inputSearch">
-                    <img class="search-cn__icn-search" src="./app/assets/Icon/search.svg" alt="">
+                    <img class="search-cn__icn-search" src="./app/assets/Icon/success-circle.png" alt="">
                 </div>
             </div>
             <div class="todo">
@@ -57,6 +57,49 @@
                     </div>
                 </div>
             </div>
+
+            <div class="page-edit">
+                <form class="form" action="">
+                    <label for="" class="form__label"></label>
+                </form>
+            </div>
+            <div class="form-cn form-cn-edit hidden">
+                <form class="form form-edit" action="form" id="form">
+                    <div class="form__elemen">
+                        <label class="form__label" for="judul">Judul</label><br>
+                        <input class="form__input type="text" name="inputJudul" id="inputJudul" required>
+                    </div>
+                    <div class="form__elemen">
+                        <label class="form__label" for="judul">Penulis</label><br>
+                        <input class="form__input type="text" name="inputPenulis" id="inputPenulis" required>
+                    </div>
+                    <div class="form__elemen">
+                        <label class="form__label" for="judul">Tahun</label><br>
+                        <input class="form__input" type="number" name="inputTahun" id="inputTahun" required>
+                    </div>
+                    <div class="form__elemen">
+                        <input class="form__submit form__submit-edit" type="submit" name="inputJudul" id="inputJudul" value="Edit">
+                    </div>
+                </form>
+                <img src="app/assets/Icon/x.svg" alt="" class="form-cn-edit__icn-close">
+            </div>
+
+            <div class="popup popup-alert hidden">
+                <div class="popup__content">
+                    <img class="popup__img" src="app/assets/Icon/success-circle-outline.svg" alt="">
+                    <h6 class="popup__message">Succes deleted</h6>
+                    <button class="popup__btn popup__btn-oke">OK</button>
+                </div>
+            </div>
+            <div class="popup popup-confirm hidden">
+                <div class="popup__content">
+                    <img class="popup__img" src="app/assets/Icon/delete-forever-outline.svg" alt="">
+                    <h6 class="popup__message">Are you sure ?</h6>
+                    <button class="popup__btn popup__btn-cancel">Cancel</button>
+                    <button class="popup__btn popup__btn-delete">Delete</button>
+                </div>
+            </div>
+            <div class="overlay hidden"></div>
         </main>
         <script src="./app/script.js"></script>
     </body>
