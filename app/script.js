@@ -54,7 +54,7 @@ const makeTodo = function(todoObject){
 
     const iconEdit = document.createElement("img");
     iconEdit.classList.add("card__icn-edit");
-    iconEdit.setAttribute("src","app/assets/icon/edit.svg");
+    iconEdit.setAttribute("src","app/assets/Icon/edit.svg");
 
     const tahun = document.createElement("p");
     tahun.classList.add("card__tahun");
